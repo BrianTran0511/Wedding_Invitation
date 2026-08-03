@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Chi Tiết Đường Đi</title>
+    
+    <!-- SỬA LỖI: Đường dẫn Google Fonts chuẩn để nhận diện font Great Vibes và Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Playfair Display", "Times New Roman", serif;
+            background-color: #3a3a3a;
+            color: #ffffff;
+            overflow-x: hidden; 
+        }
+
+        /* Khung chứa chia đôi màn hình trên Desktop */
+        .container {
+            display: flex;
+            width: 100vw;
+            min-height: 100vh;
+        }
+
+        /* Khối thông tin bên trái (Desktop) */
+        .info-side {
+            width: 40%;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: #3a3a3a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            border-right: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .info-side h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 55px;
+            color: #f3e5ab;
+            margin: 0 0 10px 0;
+        }
+
+        .thank-you {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .card-details {
+            background-color: #4a4a4a;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .card-details p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin: 10px 0;
+            color: #e0e0e0;
+        }
+
+        .card-details strong {
+            color: #f3e5ab;
+        }
+
+        /* Khung chứa các nút bấm */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: #f3e5ab;
+            border: 2px solid #f3e5ab;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #f3e5ab;
+            color: #3a3a3a;
+            transform: translateY(-2px);
+        }
+
+        /* Khối chứa bản đồ bên phải (Desktop) */
+        .map-side {
+            width: 60%;
+            height: 100vh;
+            background-color: #222; 
+        }
+
+        .map-side iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ĐÃ THÊM: Định dạng CSS cho hình ảnh động di chuyển nổi trên màn hình */
+        #bouncingImage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 70px; /* Bạn có thể tăng giảm kích thước ảnh tại đây */
+            height: auto;
+            z-index: 9999; /* Luôn nằm trên bản đồ và chữ */
+            pointer-events: none; /* Khách vẫn bấm xuyên qua ảnh để tương tác xem bản đồ được */
+            will-change: transform;
+        }
+
+        /* TỐI ƯU RESPONSIVE: THAY ĐỔI BỐ CỤC KHI XEM TRÊN DI ĐỘNG & MÁY TÍNH BẢNG */
+        @media screen and (max-width: 992px) {
+            .info-side {
+                width: 45%;
+                padding: 30px;
+            }
+            .map-side {
+                width: 55%;
+            }
+            .info-side h2 {
+                font-size: 45px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column-reverse; /* Đẩy Map lên trên đầu, chữ xuống dưới */
+            }
+
+            .map-side {
+                width: 100%;
+                height: 55vh; /* Chiếm 55% màn hình đứng điện thoại */
+            }
+
+            .info-side {
+                width: 100%;
+                padding: 35px 20px;
+                border-right: none;
+                border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            }
+
+            .info-side h2 {
+                font-size: 48px;
+            }
+
+            .thank-you {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            .card-details {
+                padding: 15px 20px;
+                margin-bottom: 20px;
+            }
+
+            .card-details p {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+            
+            #bouncingImage {
+                width: 50px; /* Thu nhỏ bớt ảnh động trên màn hình điện thoại */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ĐÃ THÊM: Thẻ img hiển thị hình ảnh động -->
+<img id="bouncingImage" src="images/5.jpg" alt="Wedding Animation">
+
+<div class="container">
+
+    <!-- Cột thông tin chi tiết địa điểm -->
+    <div class="info-side">
+        <h2>Cảm Ơn Bạn</h2>
+        <p class="thank-you">Thông tin phản hồi của bạn đã được ghi nhận!</p>
+
+        <div class="card-details">
+            <p>📅 <strong>Ngày tổ chức:</strong> 03 / 07 / 2027</p>
+            <p>🕒 <strong>Thời gian:</strong> 07:00 Tối</p>
+            <p>📍 <strong>Địa điểm:</strong> Nhà hàng Tiệc Cưới</p>
+            <p>🏢 <strong>Địa chỉ:</strong> 09 Ngô Tất Tố, Phường Thạnh Mỹ Tây, TP.HCM</p>
+        </div>
+
+        <div class="btn-group">
+            <a href="index.html" class="btn-home">Quay lại trang chủ</a>
+        </div>
+    </div>
+
+    <!-- Cột bản đồ Google Maps -->
+    <div class="map-side">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2731369482617!2d106.71339677512869!3d10.790380158936037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528acf2913d89%3A0x42610ace7640e01!2zOSBOZ8O0IFThuqV0IFThu5EsIFRo4bqhbmggTeG7uSBUw6J5LCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2sau!4v1785767589946!5m2!1svi!2sau" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+
+</div>
+
+<!-- ĐÃ THÊM: Đoạn script xử lý tính toán va chạm vật lý chạy ảnh nảy cạnh -->
+<script>
+    window.addEventListener('load', function() {
+        const img = document.getElementById('bouncingImage');
+        
+        // Cấu hình tốc độ di chuyển của ảnh (số px dịch chuyển mỗi khung hình)
+        let speedX = 2.5; 
+        let speedY = 2.5;
+
+        // Điểm xuất phát ngẫu nhiên trên màn hình tránh bị lặp góc
+        let posX = Math.random() * (window.innerWidth - 100);
+        let posY = Math.random() * (window.innerHeight - 100);
+
+        function bounceAnimation() {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            const imgWidth = img.clientWidth;
+            const imgHeight = img.clientHeight;
+
+            // Tịnh tiến tọa độ vị trí tiếp theo
+            posX += speedX;
+            posY += speedY;
+
+            // Xử lý va chạm biên bên trái và bên phải
+            if (posX + imgWidth >= screenWidth) {
+                posX = screenWidth - imgWidth;
+                speedX = -speedX;
+            } else if (posX <= 0) {
+                posX = 0;
+                speedX = -speedX;
+            }
+
+            // Xử lý va chạm biên bên trên và bên dưới
+            if (posY + imgHeight >= screenHeight) {
+                posY = screenHeight - imgHeight;
+                speedY = -speedY;
+            } else if (posY <= 0) {
+                posY = 0;
+                speedY = -speedY;
+            }
+
+            // Di chuyển hình ảnh bằng transform mang lại hiệu năng mượt mà nhất
+            img.style.transform = `translate(${posX}px, ${posY}px)`;
+
+            // Đệ quy liên tục theo tần số quét màn hình
+            requestAnimationFrame(bounceAnimation);
+        }
+
+        // Khởi chạy hiệu ứng
+        requestAnimationFrame(bounceAnimation);
+    });
+</script>
+
+</body>
+</html>
