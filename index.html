@@ -6,17 +6,23 @@
     <title>Wedding Invitation</title>
 
     <!-- Thêm đường dẫn fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: "Playfair Display", "Times New Roman", serif;
-            background-color: #3a3a3a;
-            /* CHỈNH SỬA: Cho phép cuộn trên mobile để tránh mất chữ, ẩn cuộn trên desktop */
+            
+            /* ĐÃ CẬP NHẬT: Ảnh nền hoa 6.jpg áp dụng cho toàn bộ giao diện web */
+            background-image: url('images/6.jpg'); 
+            background-repeat: no-repeat;       /* Không lặp lại ảnh */
+            background-size: cover;             /* Phủ kín toàn bộ màn hình một cách sắc nét */
+            background-position: center;        /* Căn giữa hình nền hoa */
+            background-attachment: fixed;       /* Giữ cố định nền khi cuộn trang trên trình duyệt */
+            
             overflow-x: hidden; 
         }
 
@@ -24,17 +30,41 @@
         .container {
             display: flex;
             width: 100vw;
-            min-height: 100vh; /* Sử dụng min-height thay vì height cố định để giãn theo nội dung mobile */
-            background-color: #3a3a3a;
+            min-height: 100vh;
+            /* Bỏ màu nền ở container để lộ ảnh nền body phía sau */
+            background-color: transparent; 
         }
 
         /* Cột chứa ảnh bên trái */
         .image {
             width: 50%;
             min-height: 100vh;
-            background-image: url('images/4.jpg'); 
-            background-size: cover;
-            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 40px; 
+            
+            /* ĐÃ THÊM: Phủ một lớp nền trắng kem mờ để tách biệt ảnh cưới với hoa văn nền */
+            background-color: rgba(250, 246, 238, 0.6); 
+            backdrop-filter: blur(2px); /* Tạo hiệu ứng mờ nhẹ cho hoa văn phía sau ảnh cưới */
+        }
+
+        /* Bức ảnh cưới chính của bạn */
+        .image img {
+            width: 100%;
+            max-width: 420px; 
+            height: auto;
+            object-fit: contain;
+            
+            /* Khung viền nghệ thuật bất đối xứng màu vàng sáng */
+            border: 2px solid #D4AF37;        
+            padding: 8px;                     
+            background-color: #ffffff; 
+            border-radius: 40px 4px 40px 4px; 
+            
+            /* Đổ bóng rõ nét */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         /* Cột chứa chữ bên phải */
@@ -43,16 +73,20 @@
             padding: 40px 60px;
             box-sizing: border-box;
             text-align: center;
-            color: #ffffff;
+            color: #333333;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            
+            /* ĐÃ THÊM: Phủ lớp nền trắng kem mờ dày hơn một chút bên phần chữ để dễ đọc thông tin */
+            background-color: rgba(250, 246, 238, 0.85); 
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.05);
         }
 
         /* Dòng chữ nhỏ mở đầu */
         .text .intro {
             font-size: 20px;
-            color: #f3e5ab;
+            color: #B38F44;
             margin-bottom: 10px;
             letter-spacing: 2px;
             font-weight: 300;
@@ -62,7 +96,7 @@
         .text h2 {
             font-family: 'Great Vibes', cursive;
             font-size: 75px; 
-            color: #ffffff;
+            color: #222222;
             margin: 5px 0;
             font-weight: normal;
             line-height: 1.1;
@@ -72,22 +106,22 @@
         .text .and {
             font-size: 20px;
             font-style: italic;
-            color: #e0e0e0;
+            color: #666666;
             margin: 5px 0;
         }
 
         .text p {
             font-size: 18px;
             line-height: 1.6;
-            color: #e0e0e0;
+            color: #444444;
         }
 
         hr {
             width: 60%;
             margin: 20px auto;
             border: 0;
-            border-top: 1px dashed #ffffff;
-            opacity: 0.5;
+            border-top: 1px dashed #B38F44;
+            opacity: 0.4;
         }
 
         /* Khung chứa hai nút bấm */
@@ -104,28 +138,28 @@
             padding: 12px 25px;
             font-family: "Playfair Display", serif;
             font-size: 15px;
-            color: #3a3a3a;
-            background-color: #f3e5ab;
+            color: #ffffff;
+            background-color: #B38F44;
             text-decoration: none;
             border-radius: 25px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(179, 143, 68, 0.2);
         }
 
         /* Hiệu ứng hover cho nút bấm */
         .btn-rsvp:hover {
-            background-color: #ffffff;
-            color: #3a3a3a;
+            background-color: #333333;
+            color: #ffffff;
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(243, 229, 171, 0.4);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
 
         .quote {
             font-style: italic;
-            color: #f3e5ab;
+            color: #B38F44;
             margin-top: 15px;
             font-size: 22px;
         }
@@ -133,48 +167,58 @@
         .footer {
             margin-top: 25px;
             font-size: 14px;
-            color: #cccccc;
+            color: #777777;
         }
 
         /* ==========================================================================
-           ĐÃ THÊM: MEDIA QUERIES ĐỂ TỐI ƯU RESPONSIVE CHO DI ĐỘNG & MÁY TÍNH BẢNG
+           MEDIA QUERIES ĐỂ TỐI ƯU RESPONSIVE CHO DI ĐỘNG & MÁY TÍNH BẢNG
            ========================================================================== */
         @media screen and (max-width: 992px) {
-            /* Dành cho máy tính bảng và màn hình nhỏ */
             .text {
                 padding: 30px 40px;
             }
             .text h2 {
-                font-size: 60px; /* Thu nhỏ chữ tiêu đề một chút */
+                font-size: 60px;
+            }
+            .image {
+                padding: 20px;
             }
         }
 
         @media screen and (max-width: 768px) {
             body {
-                overflow-y: auto; /* Cho phép cuộn dọc trang khi màn hình nhỏ */
+                overflow-y: auto;
+                background-attachment: scroll; /* Tối ưu cuộn nền mượt hơn trên mobile */
             }
             
             .container {
-                flex-direction: column; /* Chuyển từ hàng ngang thành hàng dọc (Ảnh trên, Chữ dưới) */
+                flex-direction: column;
             }
 
             .image {
-                width: 100%; /* Ảnh chiếm hết chiều rộng màn hình */
-                height: 45vh; /* Chiều cao ảnh chiếm 45% màn hình thiết bị */
+                width: 100%; 
+                height: auto;
                 min-height: auto;
+                padding: 50px 20px 30px 20px;
+            }
+
+            .image img {
+                max-width: 75%; 
+                padding: 6px;
+                border-radius: 30px 4px 30px 4px;
             }
 
             .text {
-                width: 100%; /* Phần chữ chiếm hết chiều rộng màn hình */
-                padding: 40px 20px; /* Thu hẹp padding hai bên */
+                width: 100%; 
+                padding: 30px 20px 50px 20px;
             }
 
             .text h2 {
-                font-size: 55px; /* Giảm cỡ chữ tên cô dâu chú rể cho vừa màn hình dọc */
+                font-size: 55px;
             }
 
             .text p {
-                font-size: 16px; /* Thu nhỏ cỡ chữ nội dung chung */
+                font-size: 16px;
             }
 
             .text .intro {
@@ -186,13 +230,13 @@
             }
 
             .rsvp-container {
-                flex-direction: column; /* Xếp chồng hai nút RSVP lên nhau trên điện thoại */
+                flex-direction: column;
                 gap: 12px;
                 align-items: center;
             }
 
             .btn-rsvp {
-                width: 80%; /* Giãn nút rộng ra cho dễ bấm bằng tay */
+                width: 80%; 
                 box-sizing: border-box;
                 padding: 10px 20px;
             }
@@ -204,10 +248,12 @@
 
 <div class="container">
 
-    <!-- Ảnh nền full bên trái (trên Mobile sẽ ở phía trên) -->
-    <div class="image"></div>
+    <!-- Khu vực chứa ảnh cưới (Nền hoa chung của body sẽ hiển thị xuyên qua lớp phủ mờ này) -->
+    <div class="image">
+        <img src="images/4.jpg" alt="Wedding Image">
+    </div>
 
-    <!-- Nội dung chữ full bên phải (trên Mobile sẽ ở phía dưới) -->
+    <!-- Nội dung chữ bên phải -->
     <div class="text">
 
         <p class="intro">Together with their families</p>
@@ -233,10 +279,10 @@
         <hr>
 
         <!-- Khu vực hiển thị nút xác nhận RSVP -->
-        <p style="font-size: 16px; color: #f3e5ab; margin-bottom: 5px;">Vui lòng xác nhận sự hiện diện của bạn:</p>
+        <p style="font-size: 16px; color: #B38F44; margin-bottom: 5px;">Vui lòng xác nhận sự hiện diện của bạn:</p>
         <div class="rsvp-container">
-            <a href="rsvp-cantho.html" target="_blank" class="btn-rsvp">RSVP Cần Thơ</a>
-            <a href="rsvp-saigon.html" target="_blank" class="btn-rsvp">RSVP Sài Gòn</a>
+            <a href="rsvp-cantho.html" target="_blank" class="btn-rsvp">Lễ Vu Quy</a>
+            <a href="rsvp-saigon.html" target="_blank" class="btn-rsvp">Lễ Tân Hôn</a>
         </div>
 
         <p class="quote">
