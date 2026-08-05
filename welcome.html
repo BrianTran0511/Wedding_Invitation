@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation - Welcome</title>
+
+    <!-- Thêm đường dẫn fonts chữ nghệ thuật và cổ điển -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: "Playfair Display", "Times New Roman", serif;
+            overflow: hidden;
+            background-color: #FAF6EE;
+        }
+
+        /* KHUNG CHỨA TOÀN BỘ MÀN HÌNH CHÀO */
+        #welcome-screen {
+            width: 100%;
+            height: 100%;
+            background-image: url('images/6.jpg'); 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+
+        /* Lớp phủ màu mờ sang trọng phía trên nền hoa */
+        .envelope-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(250, 246, 238, 0.35);
+            backdrop-filter: blur(5px); 
+            z-index: 1;
+        }
+
+        /* THIẾT KẾ CON DẤU CHỮ HỶ TRÒN NỔI BẬT NẰM CHÍNH GIỮA TRANG BÌA */
+        .hỷ-seal-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            width: 260px;
+            height: 260px;
+            border-radius: 50%; /* Biến khung chứa thành hình tròn */
+            border: 3px double #D4AF37; /* Viền đôi màu vàng hoàng gia */
+            box-shadow: 0 15px 40px rgba(179, 143, 68, 0.25), inset 0 0 15px rgba(212, 175, 55, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            
+            /* Hiệu ứng nhịp đập nhẹ thu hút khách bấm vào */
+            animation: pulseGlow 2.5s infinite ease-in-out;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Hiệu ứng nhịp đập nhẹ tự động */
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 15px 40px rgba(179, 143, 68, 0.25); }
+            50% { transform: scale(1.04); box-shadow: 0 20px 50px rgba(179, 143, 68, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 15px 40px rgba(179, 143, 68, 0.25); }
+        }
+
+        /* Chữ Hỷ nghệ thuật lớn màu đỏ son truyền thống */
+        .hỷ-character {
+            font-size: 85px;
+            line-height: 1;
+            color: #C62828; 
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dòng chữ nhỏ tiếng Anh tinh tế phía dưới chữ Hỷ */
+        .hỷ-seal-container p {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #B38F44;
+            text-transform: uppercase;
+            margin: 8px 0 0 0;
+            font-weight: 600;
+        }
+
+        /* Nút bấm ẩn dụ - Khách có thể click vào bất kỳ đâu trên vòng tròn hoặc chữ này */
+        .click-hint {
+            font-size: 12px;
+            font-style: italic;
+            color: #777777;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* HIỆU ỨNG KHI BẤM: Vòng tròn chữ Hỷ bung to và mờ dần ra */
+        #welcome-screen.opened .hỷ-seal-container {
+            transform: scale(3);
+            opacity: 0;
+        }
+
+        /* Toàn bộ màn hình bìa tan biến */
+        #welcome-screen.opened {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Giao diện màn hình mở đầu chứa con dấu chữ Hỷ quý phái -->
+<div id="welcome-screen" onclick="goToInvitation()">
+    <div class="envelope-overlay"></div>
+    
+    <!-- Con dấu tròn chứa chữ Hỷ ở trung tâm -->
+    <div class="hỷ-seal-container">
+        <h1 class="hỷ-character">囍</h1>
+        <p>Save The Date</p>
+        <span class="click-hint">Chạm để mở thiệp</span>
+    </div>
+</div>
+
+<script>
+    function goToInvitation() {
+        var screen = document.getElementById("welcome-screen");
+        if (screen) {
+            // Kích hoạt class 'opened' chạy hiệu ứng chuyển động CSS phóng to chữ Hỷ
+            screen.classList.add("opened");
+            
+            // Chờ hiệu ứng chuyển động mượt mà trong 700ms rồi đổi trang
+            setTimeout(function() {
+                window.location.href = "index.html";
+            }, 700);
+        }
+    }
+</script>
+
+</body>
+</html>
