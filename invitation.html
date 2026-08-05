@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+
+    <!-- Thêm đường dẫn fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Playfair Display", "Times New Roman", serif;
+            
+            /* ĐÃ CẬP NHẬT: Ảnh nền hoa 6.jpg áp dụng cho toàn bộ giao diện web */
+            background-image: url('images/6.jpg'); 
+            background-repeat: no-repeat;       /* Không lặp lại ảnh */
+            background-size: cover;             /* Phủ kín toàn bộ màn hình một cách sắc nét */
+            background-position: center;        /* Căn giữa hình nền hoa */
+            background-attachment: fixed;       /* Giữ cố định nền khi cuộn trang trên trình duyệt */
+            
+            overflow-x: hidden; 
+        }
+
+        /* Khung chứa bao phủ giao diện */
+        .container {
+            display: flex;
+            width: 100vw;
+            min-height: 100vh;
+            /* Bỏ màu nền ở container để lộ ảnh nền body phía sau */
+            background-color: transparent; 
+        }
+
+        /* Cột chứa ảnh bên trái */
+        .image {
+            width: 50%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 40px; 
+            
+            /* ĐÃ THÊM: Phủ một lớp nền trắng kem mờ để tách biệt ảnh cưới với hoa văn nền */
+            background-color: rgba(250, 246, 238, 0.6); 
+            backdrop-filter: blur(2px); /* Tạo hiệu ứng mờ nhẹ cho hoa văn phía sau ảnh cưới */
+        }
+
+        /* Bức ảnh cưới chính của bạn */
+        .image img {
+            width: 100%;
+            max-width: 420px; 
+            height: auto;
+            object-fit: contain;
+            
+            /* Khung viền nghệ thuật bất đối xứng màu vàng sáng */
+            border: 2px solid #D4AF37;        
+            padding: 8px;                     
+            background-color: #ffffff; 
+            border-radius: 40px 4px 40px 4px; 
+            
+            /* Đổ bóng rõ nét */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Cột chứa chữ bên phải */
+        .text {
+            width: 50%;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            text-align: center;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+            /* ĐÃ THÊM: Phủ lớp nền trắng kem mờ dày hơn một chút bên phần chữ để dễ đọc thông tin */
+            background-color: rgba(250, 246, 238, 0.85); 
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Dòng chữ nhỏ mở đầu */
+        .text .intro {
+            font-size: 20px;
+            color: #B38F44;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        /* Tên cô dâu & chú rể */
+        .text h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 75px; 
+            color: #222222;
+            margin: 5px 0;
+            font-weight: normal;
+            line-height: 1.1;
+        }
+
+        /* Chữ "and" nối giữa hai tên */
+        .text .and {
+            font-size: 20px;
+            font-style: italic;
+            color: #666666;
+            margin: 5px 0;
+        }
+
+        .text p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #444444;
+        }
+
+        hr {
+            width: 60%;
+            margin: 20px auto;
+            border: 0;
+            border-top: 1px dashed #B38F44;
+            opacity: 0.4;
+        }
+
+        /* Khung chứa hai nút bấm */
+        .rsvp-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0 5px 0;
+        }
+
+        /* Thiết kế nút bấm RSVP */
+        .btn-rsvp {
+            display: inline-block;
+            padding: 12px 25px;
+            font-family: "Playfair Display", serif;
+            font-size: 15px;
+            color: #ffffff;
+            background-color: #B38F44;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(179, 143, 68, 0.2);
+        }
+
+        /* Hiệu ứng hover cho nút bấm */
+        .btn-rsvp:hover {
+            background-color: #333333;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .quote {
+            font-style: italic;
+            color: #B38F44;
+            margin-top: 15px;
+            font-size: 22px;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #777777;
+        }
+
+        /* ==========================================================================
+           MEDIA QUERIES ĐỂ TỐI ƯU RESPONSIVE CHO DI ĐỘNG & MÁY TÍNH BẢNG
+           ========================================================================== */
+        @media screen and (max-width: 992px) {
+            .text {
+                padding: 30px 40px;
+            }
+            .text h2 {
+                font-size: 60px;
+            }
+            .image {
+                padding: 20px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                background-attachment: scroll; /* Tối ưu cuộn nền mượt hơn trên mobile */
+            }
+            
+            .container {
+                flex-direction: column;
+            }
+
+            .image {
+                width: 100%; 
+                height: auto;
+                min-height: auto;
+                padding: 50px 20px 30px 20px;
+            }
+
+            .image img {
+                max-width: 75%; 
+                padding: 6px;
+                border-radius: 30px 4px 30px 4px;
+            }
+
+            .text {
+                width: 100%; 
+                padding: 30px 20px 50px 20px;
+            }
+
+            .text h2 {
+                font-size: 55px;
+            }
+
+            .text p {
+                font-size: 16px;
+            }
+
+            .text .intro {
+                font-size: 16px;
+            }
+
+            .quote {
+                font-size: 18px;
+            }
+
+            .rsvp-container {
+                flex-direction: column;
+                gap: 12px;
+                align-items: center;
+            }
+
+            .btn-rsvp {
+                width: 80%; 
+                box-sizing: border-box;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Khu vực chứa ảnh cưới (Nền hoa chung của body sẽ hiển thị xuyên qua lớp phủ mờ này) -->
+    <div class="image">
+        <img src="images/4.jpg" alt="Wedding Image">
+    </div>
+
+    <!-- Nội dung chữ bên phải -->
+    <div class="text">
+
+        <p class="intro">Together with their families</p>
+        <h2>Helen</h2>
+        <p class="and">and</p>
+        <h2>Brian</h2>
+
+        <br>
+
+        <p>
+            Trân trọng kính mời Quý khách đến tham dự<br>
+            lễ thành hôn của chúng tôi.
+        </p>
+
+        <hr>
+
+        <p>📅 <strong>Ngày:</strong> 02 / 07 / 2027</p>
+        <p>🕒 <strong>Thời gian:</strong> 11:00 Trưa</p>
+        <p>📍 <strong>Địa điểm:</strong><br>
+        Riverside Palace - Cần Thơ
+        </p>
+
+        <hr>
+
+        <!-- Khu vực hiển thị nút xác nhận RSVP -->
+        <p style="font-size: 16px; color: #B38F44; margin-bottom: 5px;">Vui lòng xác nhận sự hiện diện của bạn:</p>
+        <div class="rsvp-container">
+            <a href="rsvp-cantho.html" target="_blank" class="btn-rsvp">Lễ Vu Quy</a>
+            <a href="rsvp-saigon.html" target="_blank" class="btn-rsvp">Lễ Tân Hôn</a>
+        </div>
+
+        <p class="quote">
+            "Together is a beautiful place to be."
+        </p>
+
+        <p class="footer">
+            Sự hiện diện của Quý khách là niềm vinh hạnh của gia đình chúng tôi.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
