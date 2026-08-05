@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Details - Lịch Trình Tiệc Cưới</title>
+
+    <!-- Nhúng font chữ đồng bộ từ Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Playfair Display", "Times New Roman", serif;
+            background-image: url('images/6.jpg'); 
+            background-repeat: no-repeat;       
+            background-size: cover;             
+            background-position: center;        
+            background-attachment: fixed;       
+            overflow-x: hidden; 
+        }
+
+        .container {
+            display: flex;
+            width: 100vw;
+            min-height: 100vh;
+            background-color: transparent; 
+        }
+
+        /* Cột trái: Ảnh cưới phụ */
+        .image {
+            width: 50%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 40px; 
+            background-color: rgba(250, 246, 238, 0.6); 
+            backdrop-filter: blur(2px);
+        }
+
+        .image img {
+            width: 100%;
+            max-width: 420px; 
+            height: auto;
+            object-fit: contain;
+            border: 2px solid #D4AF37;        
+            padding: 8px;                     
+            background-color: #ffffff; 
+            border-radius: 4px 40px 4px 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Cột phải: Thiết kế thiệp giấy giấy tối giản mộc mạc y như ảnh mẫu */
+        .text {
+            width: 50%;
+            padding: 60px 40px;
+            box-sizing: border-box;
+            text-align: center;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(253, 251, 247, 0.95); /* Màu giấy kem nhạt mờ tự nhiên */
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Phần đầu thiệp chữ "The Wedding Details" */
+        .the-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
+            color: #222222;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #222222;
+            margin: 5px 0 35px 0;
+        }
+
+        /* --- THIẾT KẾ TIMELINE TRỤC DỌC XEN KẼ CHUẨN THEO ẢNH --- */
+        .timeline-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* Đường trục dọc ở chính giữa */
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #222222;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-node {
+            position: relative;
+            width: 100%;
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Chấm tròn đen trên trục dọc */
+        .timeline-node::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #222222;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        /* Hộp chứa nội dung mốc giờ */
+        .node-content {
+            width: 42%;
+            box-sizing: border-box;
+        }
+
+        /* Định dạng chữ thời gian và sự kiện */
+        .node-content .time {
+            font-size: 13px;
+            font-style: italic;
+            color: #666666;
+            margin: 2px 0;
+            letter-spacing: 1px;
+        }
+
+        .node-content .event-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #222222;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Icon chữ giả lập hoặc bạn có thể chèn emoji/hình ảnh */
+        .node-content .icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+            display: block;
+            color: #444444;
+        }
+
+        /* Điều hướng nội dung xen kẽ Trái / Phải */
+        .node-left {
+            text-align: right;
+        }
+        .node-right {
+            text-align: left;
+        }
+        
+        /* Đẩy các thẻ trống để giữ đúng bố cục 2 bên */
+        .empty-space {
+            width: 42%;
+        }
+
+        /* --- THIẾT KẾ PHẦN DRESS CODE TÍCH HỢP --- */
+        .dresscode-section {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 25px;
+        }
+
+        .dresscode-title {
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #B38F44;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .color-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Nút quay lại thiệp chính */
+        .btn-back {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 8px 25px;
+            font-family: "Playfair Display", serif;
+            font-size: 12px;
+            color: #666666;
+            background-color: transparent;
+            text-decoration: none;
+            border: 1px solid #cccccc;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            border-color: #222222;
+            color: #222222;
+        }
+
+        /* --- RESPONSIVE CHO DI ĐỘNG --- */
+        @media screen and (max-width: 768px) {
+            body { background-attachment: scroll; }
+            .container { flex-direction: column; }
+            .image { width: 100%; min-height: auto; padding: 40px 20px 0 20px; }
+            .image img { max-width: 65%; }
+            .text { width: 100%; padding: 40px 20px; }
+            
+            /* Chuyển trục dọc về bên trái trên mobile để dễ đọc */
+            .timeline-wrapper::before { left: 20px; }
+            .timeline-node { flex-direction: row-reverse; justify-content: flex-end; }
+            .timeline-node::after { left: 20px; }
+            .node-content { width: 85%; text-align: left !important; padding-left: 15px; }
+            .empty-space { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Cột trái: Giữ nguyên khung ảnh cưới nghệ thuật của bạn -->
+    <div class="image">
+        <img src="images/4.jpg" alt="Wedding Moments">
+    </div>
+
+    <!-- Cột phải: Giao diện thiệp timeline tối giản theo ảnh mẫu -->
+    <div class="text">
+        
+        <p class="the-title">The</p>
+        <h1 class="main-title">Wedding Details</h1>
+
+        <!-- VÙNG TRỤC THỜI GIAN TIMELINE -->
+        <div class="timeline-wrapper">
+
+            <!-- Mốc 1: Bên trái -->
+            <div class="timeline-node">
+                <div class="node-content node-left">
+                    <span class="icon">💍</span>
+                    <p class="time">11:00 AM</p>
+                    <p class="event-title">Ceremony</p>
+                </div>
+                <div class="empty-space"></div>
+            </div>
+
+            <!-- Mốc 2: Bên phải -->
+            <div class="timeline-node">
+                <div class="empty-space"></div>
+                <div class="node-content node-right">
+                    <span class="icon">📷</span>
+                    <p class="time">11:30 AM</p>
+                    <p class="event-title">Photos</p>
+                </div>
+            </div>
+
+            <!-- Mốc 3: Bên trái -->
+            <div class="timeline-node">
+                <div class="node-content node-left">
+                    <span class="icon">🥂</span>
+                    <p class="time">11:45 AM</p>
+                    <p class="event-title">Toasts</p>
+                </div>
+                <div class="empty-space"></div>
+            </div>
+
+            <!-- Mốc 4: Bên phải -->
+            <div class="timeline-node">
+                <div class="empty-space"></div>
+                <div class="node-content node-right">
+                    <span class="icon">🍽️</span>
+                    <p class="time">12:30 PM</p>
+                    <p class="event-title">Dinner</p>
+                </div>
+            </div>
+
+            <!-- Mốc 5: Bên trái -->
+            <div class="timeline-node">
+                <div class="node-content node-left">
+                    <span class="icon">🎂</span>
+                    <p class="time">1:30 PM</p>
+                    <p class="event-title">Cake Cut</p>
+                </div>
+                <div class="empty-space"></div>
+            </div>
+
+        </div>
+
+        <!-- VÙNG DRESS CODE TÍCH HỢP PHÍA DƯỚI -->
+        <div class="dresscode-section">
+            <div class="dresscode-title">Dress Code</div>
+            <p style="font-size: 14px; color: #666666; margin: 0;">Trang phục xin vui lòng lựa chọn theo tông màu:</p>
+            
+            <div class="color-palette">
+                <div class="color-circle" style="background-color: #ebdcd0;" title="Be nhạt"></div>
+                <div class="color-circle" style="background-color: #B38F44;" title="Nâu đất"></div>
+                <div class="color-circle" style="background-color: #ffffff; border: 1px solid #ddd;" title="Trắng"></div>
+            </div>
+            <p style="font-size: 13px; font-style: italic; color: #888888; margin: 0;">Lưu ý: Lịch sự, trang nhã</p>
+        </div>
+
+        <!-- ĐỒNG HỒ ĐẾM NGƯỢC MINI -->
+        <div style="margin-top: 30px; width: 100%; max-width: 400px;">
+            <div class="dresscode-title" style="color: #666666;">Đếm ngược ngày vui</div>
+            <div id="countdown-text" style="font-size: 16px; font-weight: bold; color: #222222; letter-spacing: 1px; margin-top: 5px;">
+                Còn lại: <span id="days">00</span> Ngày <span id="hours">00</span> Giờ <span id="minutes">00</span> Phút <span id="seconds">00</span> Giây
+            </div>
+        </div>
+
+        <!-- ĐÃ CẬP NHẬT: Nút di chuyển đến trang bản đồ kế tiếp -->
+        <div>
+            <a href="details-saigon.html" class="btn-back">Xem bản đồ chỉ đường →</a>
+        </div>
+
+        <p style="font-size: 12px; color: #999999; margin-top: 40px; letter-spacing: 2px; text-transform: uppercase;">Helen & Brian • 02.07.2027</p>
+
+    </div>
+</div>
+
+<!-- SCRIPT XỬ LÝ ĐẾM NGƯỢC THỜI GIAN THỰC -->
+<script>
+    const weddingDate = new Date(2027, 6, 2, 11, 0, 0).getTime();
+
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById("countdown-text").innerHTML = "Rất hân hạnh được đón tiếp Quý Khách!";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = days;
+        document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+        document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    }, 1000);
+</script>
+
+</body>
+</html>
+
+
