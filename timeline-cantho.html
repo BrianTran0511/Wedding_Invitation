@@ -241,10 +241,29 @@
             .text { width: 100%; padding: 40px 20px; }
             
             /* Chuyển trục dọc về bên trái trên mobile để dễ đọc */
-            .timeline-wrapper::before { left: 20px; }
-            .timeline-node { flex-direction: row-reverse; justify-content: flex-end; }
-            .timeline-node::after { left: 20px; }
-            .node-content { width: 85%; text-align: left !important; padding-left: 15px; }
+            .timeline-wrapper {
+                max-width: 100%;
+                padding-left: 40px;
+                padding-right: 20px;
+            }
+            .timeline-wrapper::before {
+                left: 18px;
+            }
+            .timeline-node {
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding-bottom: 25px;
+            }
+            .timeline-node::after {
+                left: 18px;
+                top: 15px;
+            }
+            .node-content {
+                width: calc(100% - 40px);
+                text-align: left !important;
+                padding-left: 20px;
+            }
             .empty-space { display: none; }
         }
     </style>
