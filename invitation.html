@@ -275,6 +275,27 @@
             75% { transform: translate3d(10px,80vh,0) rotate(270deg); }
             100% { transform: translate3d(0,110vh,0) rotate(360deg); opacity: 0.9; }
         }
+
+        /* Music toggle button (fixed, accessible) */
+        .music-toggle {
+            position: fixed;
+            left: 16px;
+            bottom: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(179,143,68,0.95);
+            color: #fff;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+            cursor: pointer;
+            z-index: 10001;
+        }
+        .music-toggle[aria-pressed="true"] { background: rgba(60,60,60,0.95); }
     </style>
 </head>
 
@@ -282,6 +303,10 @@
 
 <!-- Petal container: các hoa rơi được tạo động bởi JS -->
 <div id="petal-container" aria-hidden="true"></div>
+
+<!-- Background music (local file placed by you) -->
+<audio id="bgMusic" src="wedding/images/50 Năm Về Sau.mp3" preload="auto" loop></audio>
+<button id="musicToggle" class="music-toggle" aria-pressed="false" title="Bật/Tắt nhạc nền">🔈</button>
 
 <div class="container">
 
@@ -367,6 +392,69 @@
 
             container.appendChild(el);
         }
+    })();
+</script>
+
+<script>
+    (function(){
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('musicToggle');
+        if(!audio || !btn) return;
+        let playing = false;
+
+        // show inline error message if audio fails to load
+        const err = document.createElement('div');
+        err.id = 'audioError';
+        err.style.position = 'fixed';
+        err.style.left = '16px';
+        err.style.bottom = '76px';
+        err.style.background = 'rgba(0,0,0,0.75)';
+        err.style.color = '#fff';
+        err.style.padding = '8px 12px';
+        err.style.borderRadius = '8px';
+        err.style.fontSize = '13px';
+        err.style.zIndex = '10002';
+        err.style.display = 'none';
+        document.body.appendChild(err);
+
+        function showError(msg){ err.textContent = msg; err.style.display='block'; }
+
+        btn.addEventListener('click', async function(){
+            if(!playing){
+                try{
+                    await audio.play();
+                    playing = true;
+                    btn.textContent = '🔊';
+                    btn.setAttribute('aria-pressed','true');
+                } catch(e) {
+                    console.warn('Playback blocked:', e);
+                    showError('Không thể phát nhạc — kiểm tra file audio ở audio/ambient.mp3 hoặc nhấn lần nữa.');
+                }
+            } else {
+                audio.pause();
+                playing = false;
+                btn.textContent = '🔈';
+                btn.setAttribute('aria-pressed','false');
+            }
+        });
+
+        // attempt to start audio on first user interaction (helps with autoplay restrictions)
+        function tryPlayOnInteraction(){
+            document.removeEventListener('click', tryPlayOnInteraction);
+            document.removeEventListener('touchstart', tryPlayOnInteraction);
+            audio.play().then(()=>{
+                // don't force playing indicator unless user pressed the toggle
+            }).catch(()=>{});
+        }
+        document.addEventListener('click', tryPlayOnInteraction, { once: true });
+        document.addEventListener('touchstart', tryPlayOnInteraction, { once: true });
+
+        audio.addEventListener('play', ()=>{ playing=true; btn.textContent='🔊'; btn.setAttribute('aria-pressed','true'); err.style.display='none'; });
+        audio.addEventListener('pause', ()=>{ playing=false; btn.textContent='🔈'; btn.setAttribute('aria-pressed','false'); });
+
+        audio.addEventListener('error', ()=>{
+            showError('Không tìm thấy file audio. Đặt file MP3 vào audio/ambient.mp3 hoặc chỉnh src.');
+        });
     })();
 </script>
 
