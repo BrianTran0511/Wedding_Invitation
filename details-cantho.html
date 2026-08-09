@@ -83,7 +83,6 @@
             width: 100%;
         }
 
-        /* ĐÃ THÊM: Thiết kế nút Thêm vào lịch màu vàng sáng nổi bật */
         .btn-calendar {
             display: inline-block;
             width: 80%;
@@ -146,21 +145,7 @@
             border: none;
         }
 
-        /* Định dạng CSS cho hình ảnh động .jpg di chuyển nổi trên màn hình */
-        #bouncingImage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 70px; 
-            height: 70px; 
-            object-fit: cover; 
-            z-index: 9999; 
-            pointer-events: none; 
-            will-change: transform;
-            border-radius: 50%; 
-            border: 2px solid #f3e5ab; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
-        }
+        /* (Ảnh động đã được gỡ bỏ) */
 
         /* TỐI ƯU RESPONSIVE: THAY ĐỔI BỐ CỤC KHI XEM TRÊN DI ĐỘNG & MÁY TÍNH BẢNG */
         @media screen and (max-width: 992px) {
@@ -212,10 +197,7 @@
                 line-height: 1.6;
             }
             
-            #bouncingImage {
-                width: 55px; 
-                height: 55px;
-            }
+            /* ảnh động đã gỡ, các tham chiếu đã bị xoá */
             
             .btn-calendar, .btn-home {
                 width: 90%;
@@ -225,8 +207,7 @@
 </head>
 <body>
 
-<!-- Thẻ định dạng ảnh vật lý .jpg nảy cạnh màn hình -->
-<img id="bouncingImage" src="images/5.jpg" alt="Wedding Animation">
+<!-- Ảnh động đã được gỡ bỏ -->
 
 <div class="container">
 
@@ -243,7 +224,8 @@
         </div>
 
         <div class="btn-group">
-                <a href="invitation.html" class="btn-home">Quay lại trang chủ</a>
+            <a href="#" id="googleCalendarBtn" class="btn-calendar">Thêm vào Google Calendar</a>
+            <a href="invitation.html" class="btn-home">Quay lại trang chủ</a>
         </div>
     </div>
 
@@ -254,53 +236,25 @@
 
 </div>
 
-<!-- SỬA LỖI & HOÀN THIỆN: Logic toán va chạm vật lý chạy ảnh nảy đầy đủ -->
+<!-- Giữ lại chỉ logic nút Google Calendar, ảnh động đã bị gỡ -->
 <script>
     window.addEventListener('load', function() {
-        const img = document.getElementById('bouncingImage');
-        
-        let speedX = 2.0; 
-        let speedY = 2.0;
-
-        let posX = Math.random() * (window.innerWidth - 100);
-        let posY = Math.random() * (window.innerHeight - 100);
-
-        function bounceAnimation() {
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-            
-            const imgWidth = img.clientWidth;
-            const imgHeight = img.clientHeight;
-
-            posX += speedX;
-            posY += speedY;
-
-            // Kiểm tra va chạm biên Trái / Phải
-            if (posX + imgWidth >= screenWidth) {
-                posX = screenWidth - imgWidth;
-                speedX = -speedX;
-            } else if (posX <= 0) {
-                posX = 0;
-                speedX = -speedX;
-            }
-
-            // Kiểm tra va chạm biên Trên / Dưới
-            if (posY + imgHeight >= screenHeight) {
-                posY = screenHeight - imgHeight;
-                speedY = -speedY;
-            } else if (posY <= 0) {
-                posY = 0;
-                speedY = -speedY;
-            }
-
-            // Cập nhật vị trí hiển thị mới
-            img.style.transform = `translate(${posX}px, ${posY}px)`;
-            
-            requestAnimationFrame(bounceAnimation);
+        const googleCalendarBtn = document.getElementById('googleCalendarBtn');
+        if (googleCalendarBtn) {
+            googleCalendarBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const params = new URLSearchParams({
+                    action: 'TEMPLATE',
+                    text: 'Lễ Cưới Helen & Brian',
+                    dates: '20270702T110000/20270702T130000',
+                    details: 'Tham dự lễ cưới Helen & Brian tại Cần Thơ.',
+                    location: '364B CMT8, Phường Bình Thủy, TP. Cần Thơ',
+                    ctz: 'Asia/Ho_Chi_Minh'
+                });
+                const url = 'https://calendar.google.com/calendar/render?' + params.toString();
+                window.open(url, '_blank', 'noopener');
+            });
         }
-        
-        // Kích hoạt hoạt ảnh chạy tự động
-        bounceAnimation();
     });
 </script>
 

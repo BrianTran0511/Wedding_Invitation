@@ -82,6 +82,31 @@
             align-items: center;
         }
 
+        .btn-calendar {
+            display: inline-block;
+            width: 80%;
+            max-width: 280px;
+            padding: 12px 20px;
+            background-color: #f3e5ab;
+            color: #3a3a3a;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(243, 229, 171, 0.2);
+            border: 2px solid #f3e5ab;
+            box-sizing: border-box;
+        }
+
+        .btn-calendar:hover {
+            background-color: #ffffff;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
         .btn-home {
             display: inline-block;
             padding: 12px 30px;
@@ -115,17 +140,7 @@
             border: none;
         }
 
-        /* ĐÃ THÊM: Định dạng CSS cho hình ảnh động di chuyển nổi trên màn hình */
-        #bouncingImage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 70px; /* Bạn có thể tăng giảm kích thước ảnh tại đây */
-            height: auto;
-            z-index: 9999; /* Luôn nằm trên bản đồ và chữ */
-            pointer-events: none; /* Khách vẫn bấm xuyên qua ảnh để tương tác xem bản đồ được */
-            will-change: transform;
-        }
+        /* (Ảnh động đã được gỡ bỏ) */
 
         /* TỐI ƯU RESPONSIVE: THAY ĐỔI BỐ CỤC KHI XEM TRÊN DI ĐỘNG & MÁY TÍNH BẢNG */
         @media screen and (max-width: 992px) {
@@ -177,16 +192,13 @@
                 line-height: 1.6;
             }
             
-            #bouncingImage {
-                width: 50px; /* Thu nhỏ bớt ảnh động trên màn hình điện thoại */
-            }
+            /* ảnh động đã gỡ, tham chiếu bị xoá */
         }
     </style>
 </head>
 <body>
 
-<!-- ĐÃ THÊM: Thẻ img hiển thị hình ảnh động -->
-<img id="bouncingImage" src="images/5.jpg" alt="Wedding Animation">
+<!-- Ảnh động đã được gỡ bỏ -->
 
 <div class="container">
 
@@ -203,6 +215,7 @@
         </div>
 
         <div class="btn-group">
+            <a href="#" id="googleCalendarBtn" class="btn-calendar">Thêm vào Google Calendar</a>
             <a href="invitation.html" class="btn-home">Quay lại trang chủ</a>
         </div>
     </div>
@@ -214,57 +227,25 @@
 
 </div>
 
-<!-- ĐÃ THÊM: Đoạn script xử lý tính toán va chạm vật lý chạy ảnh nảy cạnh -->
+<!-- Ảnh động đã bị gỡ, giữ lại logic nút Google Calendar -->
 <script>
     window.addEventListener('load', function() {
-        const img = document.getElementById('bouncingImage');
-        
-        // Cấu hình tốc độ di chuyển của ảnh (số px dịch chuyển mỗi khung hình)
-        let speedX = 2.5; 
-        let speedY = 2.5;
-
-        // Điểm xuất phát ngẫu nhiên trên màn hình tránh bị lặp góc
-        let posX = Math.random() * (window.innerWidth - 100);
-        let posY = Math.random() * (window.innerHeight - 100);
-
-        function bounceAnimation() {
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
-            
-            const imgWidth = img.clientWidth;
-            const imgHeight = img.clientHeight;
-
-            // Tịnh tiến tọa độ vị trí tiếp theo
-            posX += speedX;
-            posY += speedY;
-
-            // Xử lý va chạm biên bên trái và bên phải
-            if (posX + imgWidth >= screenWidth) {
-                posX = screenWidth - imgWidth;
-                speedX = -speedX;
-            } else if (posX <= 0) {
-                posX = 0;
-                speedX = -speedX;
-            }
-
-            // Xử lý va chạm biên bên trên và bên dưới
-            if (posY + imgHeight >= screenHeight) {
-                posY = screenHeight - imgHeight;
-                speedY = -speedY;
-            } else if (posY <= 0) {
-                posY = 0;
-                speedY = -speedY;
-            }
-
-            // Di chuyển hình ảnh bằng transform mang lại hiệu năng mượt mà nhất
-            img.style.transform = `translate(${posX}px, ${posY}px)`;
-
-            // Đệ quy liên tục theo tần số quét màn hình
-            requestAnimationFrame(bounceAnimation);
+        const googleCalendarBtn = document.getElementById('googleCalendarBtn');
+        if (googleCalendarBtn) {
+            googleCalendarBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const params = new URLSearchParams({
+                    action: 'TEMPLATE',
+                    text: 'Lễ Cưới Helen & Brian',
+                    dates: '20270703T190000/20270703T210000',
+                    details: 'Tham dự lễ cưới Helen & Brian tại Sài Gòn.',
+                    location: '09 Ngô Tất Tố, Phường Thạnh Mỹ Tây, TP.HCM',
+                    ctz: 'Asia/Ho_Chi_Minh'
+                });
+                const url = 'https://calendar.google.com/calendar/render?' + params.toString();
+                window.open(url, '_blank', 'noopener');
+            });
         }
-
-        // Khởi chạy hiệu ứng
-        requestAnimationFrame(bounceAnimation);
     });
 </script>
 

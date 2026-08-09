@@ -3,200 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xác Nhận Tham Dự - Cần Thơ</title>
-    
-    <!-- Cập nhật chính xác link Google Fonts hệ thống để nhận diện font chữ -->
+    <title>Love Story - Sài Gòn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
-    
     <style>
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
             font-family: "Playfair Display", serif;
-            background-color: #3a3a3a;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background: linear-gradient(180deg, #f3e2dc 0%, #dcc8b2 100%);
+            color: #3b3028;
         }
-        .form-container {
-            background-color: #4a4a4a;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 500px;
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+        .hero {
             text-align: center;
-            box-sizing: border-box; /* Bảo vệ khung chứa không bị tràn màn hình mobile */
+            padding: 30px 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 24px;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.08);
         }
-        h2 {
+        .hero h1 {
+            margin: 0;
             font-family: 'Great Vibes', cursive;
-            font-size: 50px;
-            color: #f3e5ab;
+            font-size: 54px;
+            color: #905f49;
+        }
+        .hero p {
+            max-width: 700px;
+            margin: 14px auto 0;
+            font-size: 16px;
+            line-height: 1.75;
+            color: #5c4a3f;
+        }
+        .story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .story-block {
+            background: rgba(255,255,255,0.95);
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+        }
+        .story-block h2 {
             margin-top: 0;
-            margin-bottom: 10px;
+            font-size: 24px;
+            color: #7d5b3e;
+            letter-spacing: 1px;
         }
-        p {
-            color: #e0e0e0;
-            margin-bottom: 30px;
+        .story-block p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4f4237;
+            margin-bottom: 16px;
         }
-        .form-group {
-            text-align: left;
+        .gallery {
+            margin-top: 40px;
+        }
+        .gallery h2 {
             margin-bottom: 20px;
+            font-size: 24px;
+            color: #7d5b3e;
         }
-        label {
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .photo-grid img {
+            width: 100%;
             display: block;
-            margin-bottom: 8px;
-            color: #f3e5ab;
-            font-weight: bold;
-            font-size: 16px;
+            border-radius: 18px;
+            height: 200px;
+            object-fit: cover;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.08);
         }
-        input[type="text"], select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #666;
-            border-radius: 5px;
-            background-color: #555;
-            color: #fff;
-            font-family: "Playfair Display", serif;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        .radio-group {
+        .button-row {
             display: flex;
-            gap: 20px;
-            margin-top: 5px;
-        }
-        .radio-group label {
-            color: #fff;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background-color: #f3e5ab;
-            color: #3a3a3a;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .btn-submit:hover {
-            background-color: #ffffff;
-            transform: translateY(-2px);
-        }
-        .btn-submit:disabled {
-            background-color: #cccccc;
-            color: #666666;
-            cursor: not-allowed;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 30px;
         }
         .btn-back {
             display: inline-block;
-            margin-top: 20px;
-            color: #cccccc;
+            padding: 12px 26px;
+            border-radius: 999px;
             text-decoration: none;
-            font-size: 14px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #c57464, #f5d7b3);
+            font-weight: 700;
         }
-        .btn-back:hover {
-            color: #f3e5ab;
+        @media screen and (max-width: 860px) {
+            .story { grid-template-columns: 1fr; }
+            .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-
-        /* Tối ưu hóa hiển thị mượt mà trên điện thoại di động nhỏ */
-        @media screen and (max-width: 480px) {
-            .form-container {
-                padding: 30px 20px;
-                margin: 15px;
-            }
-            h2 { font-size: 42px; }
+        @media screen and (max-width: 560px) {
+            .page { padding: 20px 16px 40px; }
+            .hero h1 { font-size: 42px; }
+            .story-block { padding: 22px; }
+            .photo-grid { grid-template-columns: 1fr; }
+            .photo-grid img { height: 220px; }
         }
     </style>
 </head>
 <body>
+    <div class="page">
+        <section class="hero">
+            <h1>Love Story Sài Gòn</h1>
+            <p>Helen và Brian đã dệt nên kỷ niệm giữa nhịp sống sôi động của Sài Gòn, nơi hai con tim tìm thấy nhau giữa phố phường và chia sẻ những ước mơ cùng nhau.</p>
+        </section>
 
-<div class="form-container">
-    <h2>RSVP Sài Gòn</h2>
-    <p>Sự hiện diện của bạn là niềm vinh hạnh lớn cho chúng tôi!</p>
-
-    <!-- SỬA LỖI CHÍNH: Đã làm sạch đường link Google Apps Script, loại bỏ đoạn dính chữ trùng lặp -->
-    <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxF649nMUeo_siIO6Csb3r3cKvQZuOORg-gjIuk9CKgphkUHYHaFq_uPSCqcgQlQLrH/exec" method="POST">
-        
-        <div class="form-group">
-            <label for="fullname">Họ và Tên của bạn:</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Nhập họ và tên..." required>
-        </div>
-
-        <div class="form-group">
-            <label>Bạn sẽ tham dự chứ?</label>
-            <div class="radio-group">
-                <label><input type="radio" name="attend" value="Chắc chắn đến" checked> Chắc chắn đến</label>
-                <label><input type="radio" name="attend" value="Rất tiếc không thể đến"> Rất tiếc không thể đến</label>
+        <div class="story">
+            <div class="story-block">
+                <h2>Những Ngày Sài Gòn</h2>
+                <p>Giữa bộn bề công việc và tiếng xe, họ vẫn dành thời gian để cùng nhau thưởng thức cà phê, đi dạo và lắng nghe nhau. Tình yêu của họ không ồn ào, mà ấm áp theo từng bước chân.</p>
+                <p>Những buổi chiều mưa, những hàng quán đêm đã trở thành bối cảnh cho nụ cười và những lời hẹn ước dịu dàng.</p>
+            </div>
+            <div class="story-block">
+                <h2>Chặng Đường Cùng Nhau</h2>
+                <p>Mỗi cuộc gặp gỡ đều đầy ắp niềm vui và sự sẻ chia. Họ học cách tin tưởng, vun đắp và đồng hành cùng nhau qua những ngày thường nhật.</p>
+                <p>Yêu Sài Gòn như yêu nhau, họ cùng nhau tạo nên một câu chuyện thật riêng, thật gần và thật trọn vẹn.</p>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="guests">Số lượng người đi cùng:</label>
-            <select id="guests" name="guests">
-                <option value="Đi một mình">Đi một mình</option>
-                <option value="Đi 2 người">Đi 2 người</option>
-                <option value="Đi 3 người">Đi 3 người</option>
-                <option value="Đi cả gia đình">Đi cả gia đình</option>
-            </select>
+        <section class="gallery">
+            <h2>Album Ảnh Yêu Thương</h2>
+            <div class="photo-grid">
+                <img src="images/5.jpg" alt="Love Story Photo 5">
+                <img src="images/6.jpg" alt="Love Story Photo 6">
+                <img src="images/7.jpg" alt="Love Story Photo 7">
+                <img src="images/4.jpg" alt="Love Story Photo 4">
+            </div>
+        </section>
+
+        <div class="button-row">
+            <a href="timeline-saigon.html" class="btn-back">Xem Lịch Trình</a>
+            <a href="details-saigon.html" class="btn-back">Xem Chi Tiết</a>
+            <a href="invitation.html" class="btn-back">← Quay lại thiệp mời</a>
         </div>
-
-        <div class="form-group">
-            <label for="message">Lời chúc gửi đến cô dâu & chú rể (nếu có):</label>
-            <input type="text" id="message" name="message" placeholder="Viết lời chúc tại đây...">
-        </div>
-
-        <button type="submit" id="submitBtn" class="btn-submit">Xác Nhận Ngay</button>
-    </form>
-
-    <a href="invitation.html" class="btn-back">← Quay lại trang thiệp chính</a>
-</div>
-
-<!-- Đã tối ưu hóa cấu trúc URLSearchParams chuẩn mực cho môi trường chạy thử máy cá nhân -->
-<script>
-    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-        e.preventDefault(); 
-
-        const form = this;
-        const button = document.getElementById('submitBtn');
-        
-        button.disabled = true;
-        button.innerText = "Đang lưu thông tin...";
-
-        // Ép cấu trúc form sang định dạng URLSearchParams để Google Script xử lý mượt mà tiếng Việt
-        const searchParams = new URLSearchParams(new FormData(form));
-
-        // Thực hiện gửi dữ liệu
-        fetch(form.action, {
-            method: 'POST',
-            body: searchParams,
-            mode: 'no-cors', // Vượt qua kiểm tra CORS bảo mật của trình duyệt tại máy cá nhân
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(() => {
-            // Chuyển hướng ngay sang trang timeline tiệc tại Sài Gòn
-            window.location.href = "timeline-saigon.html";
-        })
-        .catch(error => {
-            console.error('Lỗi hệ thống:', error);
-            alert('Hệ thống bận, vui lòng thử lại sau vài giây!');
-            button.disabled = false;
-            button.innerText = "Xác Nhận Ngay";
-        });
-    });
-</script>
-
+    </div>
 </body>
 </html>

@@ -45,10 +45,57 @@
             z-index: 1;
         }
 
+        /* Cửa màn vén hai lớp */
+        .curtain {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            transition: transform 0.9s ease-in-out;
+        }
+
+        .curtain.outer {
+            background: linear-gradient(120deg, #7f1414 0%, #b84045 40%, #7f1414 100%);
+            z-index: 3;
+        }
+
+        .curtain.inner {
+            background: linear-gradient(120deg, rgba(247, 224, 156, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(247, 224, 156, 0.95) 100%);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.18);
+            z-index: 2;
+            transition-delay: 0.12s;
+        }
+
+        .curtain.left {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .curtain.right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        #welcome-screen.opened .curtain.outer.left {
+            transform: translateX(-100%);
+        }
+
+        #welcome-screen.opened .curtain.outer.right {
+            transform: translateX(100%);
+        }
+
+        #welcome-screen.opened .curtain.inner.left {
+            transform: translateX(-105%);
+        }
+
+        #welcome-screen.opened .curtain.inner.right {
+            transform: translateX(105%);
+        }
+
         /* THIẾT KẾ CON DẤU CHỮ HỶ TRÒN NỔI BẬT NẰM CHÍNH GIỮA TRANG BÌA */
         .hỷ-seal-container {
             position: relative;
-            z-index: 2;
+            z-index: 4;
             text-align: center;
             background: rgba(255, 255, 255, 0.95);
             width: 260px;
@@ -121,6 +168,10 @@
 <!-- Giao diện màn hình mở đầu chứa con dấu chữ Hỷ quý phái -->
 <div id="welcome-screen" onclick="goToInvitation()">
     <div class="envelope-overlay"></div>
+    <div class="curtain outer left"></div>
+    <div class="curtain inner left"></div>
+    <div class="curtain outer right"></div>
+    <div class="curtain inner right"></div>
     
     <!-- Con dấu tròn chứa chữ Hỷ ở trung tâm -->
     <div class="hỷ-seal-container">
@@ -134,13 +185,10 @@
     function goToInvitation() {
         var screen = document.getElementById("welcome-screen");
         if (screen) {
-            // Kích hoạt class 'opened' chạy hiệu ứng chuyển động CSS phóng to chữ Hỷ
             screen.classList.add("opened");
-            
-            // Chờ hiệu ứng chuyển động mượt mà trong 700ms rồi đổi trang
             setTimeout(function() {
                 window.location.href = "invitation.html";
-            }, 700);
+            }, 900);
         }
     }
 </script>
