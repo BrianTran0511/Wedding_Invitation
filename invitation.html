@@ -258,13 +258,15 @@
             will-change: transform, opacity;
             user-select: none;
             -webkit-user-select: none;
-            font-size: 24px; /* default, overridden inline */
             opacity: 0.95;
             transform: translate3d(0,-10vh,0) rotate(0deg);
             animation-name: petal-move;
             animation-timing-function: linear;
             animation-iteration-count: infinite;
+            display: block;
         }
+
+        .petal svg { display:block; width:100%; height:auto; }
 
         @keyframes petal-move {
             0% { transform: translate3d(0,-10vh,0) rotate(0deg); opacity: 0.95; }
@@ -341,17 +343,23 @@
         function rand(min, max) { return Math.random() * (max - min) + min; }
 
         for (let i = 0; i < COUNT; i++) {
-            const el = document.createElement('span');
+            const el = document.createElement('div');
             el.className = 'petal';
-            el.textContent = '🌹';
 
-            const size = Math.round(rand(18, 44));
+            // simple rose petal SVG (single path) — colored softly
+            const svg = `
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M32 2 C20 18 10 24 10 34 C10 48 22 58 32 62 C42 58 54 48 54 34 C54 24 44 18 32 2 Z" fill="#f6a6b4" stroke="#d86b80" stroke-width="1"/>
+                </svg>`;
+            el.innerHTML = svg;
+
+            const size = Math.round(rand(16, 40));
             const left = rand(0, 100);
             const duration = rand(6, 14); // seconds
             const delay = rand(0, 8);
 
             el.style.left = left + '%';
-            el.style.fontSize = size + 'px';
+            el.style.width = size + 'px';
             el.style.opacity = (rand(0.6, 1)).toFixed(2);
             el.style.animationDuration = duration + 's';
             el.style.animationDelay = delay + 's';
