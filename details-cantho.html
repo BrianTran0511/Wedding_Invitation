@@ -134,18 +134,218 @@
 
         /* Khối chứa bản đồ bên phải (Desktop) */
         .map-side {
+            position: relative;
             width: 60%;
             height: 100vh;
             background-color: #222; 
+            overflow: hidden;
         }
 
         .map-side iframe {
             width: 100%;
             height: 100%;
             border: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
         }
 
-        /* (Ảnh động đã được gỡ bỏ) */
+        .map-side.revealed iframe {
+            opacity: 1;
+        }
+
+        .map-loading {
+            position: absolute;
+            inset: 0;
+            z-index: 40;
+            display: grid;
+            place-items: center;
+            background: rgba(0,0,0,0.08);
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .loader-gif-full {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            z-index: 40;
+        }
+
+        .loader-caption {
+            position: relative;
+            z-index: 20;
+            background: rgba(0,0,0,0.65);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            max-width: 88%;
+            margin: 0 auto;
+        }
+
+        .loader-pin::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            transform: translateX(-50%) rotate(45deg);
+            background: #3a3a3a;
+            border-radius: 4px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        }
+
+        .car-track {
+            width: 100%;
+            height: 14px;
+            margin-top: 14px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+            border: 1px dashed rgba(243,229,171,0.4);
+        }
+
+        .driving-car {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-size: 20px;
+            animation: driveLoop 2s ease-in-out infinite;
+        }
+
+        @keyframes driveLoop {
+            0% { left: 0; transform: translate(0, -50%) rotate(0deg); }
+            50% { left: calc(100% - 24px); transform: translate(0, -50%) rotate(10deg); }
+            100% { left: 0; transform: translate(0, -50%) rotate(0deg); }
+        }
+
+        .loader-line {
+            width: 100%;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(243,229,171,0.35), rgba(243,229,171,0.9), rgba(243,229,171,0.35));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -30%;
+            width: 30%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            transform: skewX(-20deg);
+            animation: trackMove 1.6s linear infinite;
+        }
+
+        .loader-gif {
+            width: clamp(120px, 32vw, 260px);
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 14px 40px rgba(0,0,0,0.22);
+        }
+
+        @keyframes pinBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes trackMove {
+            0% { left: -30%; }
+            100% { left: 130%; }
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .map-overlay .map-tip {
+            pointer-events: auto;
+            background: rgba(255,255,255,0.88);
+            color: #222;
+            padding: 10px 14px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            font-size: 13px;
+            line-height: 1.4;
+            max-width: 220px;
+            text-align: right;
+        }
+
+        .map-overlay .map-hint {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(243,229,171,0.95);
+            color: #222;
+            padding: 10px 14px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            font-size: 13px;
+            max-width: 240px;
+            text-align: right;
+            animation: floatHint 3s ease-in-out infinite;
+        }
+
+        .map-hint .hint-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #3a3a3a;
+            color: #f3e5ab;
+            font-size: 14px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+        }
+
+        .map-overlay .map-button {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #f3e5ab, #d4af37);
+            color: #3a3a3a;
+            text-decoration: none;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+            animation: pulseMap 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulseMap {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        @keyframes floatHint {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-6px); opacity: 0.96; }
+        }
+
+  
 
         /* TỐI ƯU RESPONSIVE: THAY ĐỔI BỐ CỤC KHI XEM TRÊN DI ĐỘNG & MÁY TÍNH BẢNG */
         @media screen and (max-width: 992px) {
@@ -230,8 +430,17 @@
     </div>
 
     <!-- Cột bản đồ Google Maps -->
-    <div class="map-side">
+    <div class="map-side" id="mapSide">
+        <div class="map-loading" id="mapLoader">
+            <img class="loader-gif-full" src="wedding/images/driving.gif" alt="Đang chuẩn bị bản đồ" />
+            <div class="loader-caption">Đang tải bản đồ, mời bạn đợi một chút...</div>
+        </div>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.4350894276963!2d105.75970357512193!3d10.06339037194054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a087e6f7fc4661%3A0xdf4c147cc0822491!2zMzY0QiDEkC4gQ8OhY2ggTeG6oW5nIFRow6FuZyA4LCBCw6xuaCBUaOG7p3ksIEPhuqduIFRoxqEsIFZp4buHdCBOYW0!5e0!3m2!1svi!2sau!4v1785747670377!5m2!1svi!2sau" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="map-overlay">
+            <div class="map-tip">Chưa mở bản đồ? Nhấn nút bên dưới để xem đường đến nơi.</div>
+            <div class="map-hint"><span class="hint-icon">🧭</span><span>Chạm vào nút để điều hướng nhanh.</span></div>
+            <a href="#" class="map-button" id="openMapBtn">Mở Google Map</a>
+        </div>
     </div>
 
 </div>
@@ -240,6 +449,9 @@
 <script>
     window.addEventListener('load', function() {
         const googleCalendarBtn = document.getElementById('googleCalendarBtn');
+        const openMapBtn = document.getElementById('openMapBtn');
+        const mapUrl = 'https://www.google.com/maps/place/364B+CMT8,+Phường+Bình+Thủy,+TP.+Cần+Thơ';
+
         if (googleCalendarBtn) {
             googleCalendarBtn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -254,6 +466,39 @@
                 const url = 'https://calendar.google.com/calendar/render?' + params.toString();
                 window.open(url, '_blank', 'noopener');
             });
+        }
+
+        const mapLoader = document.getElementById('mapLoader');
+        const mapSide = document.getElementById('mapSide');
+
+        function revealMap() {
+            if (mapLoader) {
+                mapLoader.style.opacity = '0';
+                mapLoader.style.transition = 'opacity 0.5s ease';
+                setTimeout(function() {
+                    if (mapLoader && mapLoader.parentNode) {
+                        mapLoader.parentNode.removeChild(mapLoader);
+                    }
+                }, 600);
+            }
+            if (mapSide) {
+                mapSide.classList.add('revealed');
+            }
+        }
+
+        if (openMapBtn) {
+            openMapBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(mapUrl, '_blank', 'noopener');
+            });
+        }
+
+        setTimeout(revealMap, 2200);
+        if (mapSide) {
+            const iframe = mapSide.querySelector('iframe');
+            if (iframe) {
+                iframe.addEventListener('load', revealMap);
+            }
         }
     });
 </script>
