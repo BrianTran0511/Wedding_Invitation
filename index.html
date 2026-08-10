@@ -32,7 +32,6 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
         }
 
         /* Lớp phủ màu mờ sang trọng phía trên nền hoa */
@@ -43,53 +42,6 @@
             background-color: rgba(250, 246, 238, 0.35);
             backdrop-filter: blur(5px); 
             z-index: 1;
-        }
-
-        /* Cửa màn vén hai lớp */
-        .curtain {
-            position: absolute;
-            top: 0;
-            width: 50%;
-            height: 100%;
-            transition: transform 0.9s ease-in-out;
-        }
-
-        .curtain.outer {
-            background: linear-gradient(120deg, #7f1414 0%, #b84045 40%, #7f1414 100%);
-            z-index: 3;
-        }
-
-        .curtain.inner {
-            background: linear-gradient(120deg, rgba(247, 224, 156, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(247, 224, 156, 0.95) 100%);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.18);
-            z-index: 2;
-            transition-delay: 0.12s;
-        }
-
-        .curtain.left {
-            left: 0;
-            transform: translateX(0);
-        }
-
-        .curtain.right {
-            right: 0;
-            transform: translateX(0);
-        }
-
-        #welcome-screen.opened .curtain.outer.left {
-            transform: translateX(-100%);
-        }
-
-        #welcome-screen.opened .curtain.outer.right {
-            transform: translateX(100%);
-        }
-
-        #welcome-screen.opened .curtain.inner.left {
-            transform: translateX(-105%);
-        }
-
-        #welcome-screen.opened .curtain.inner.right {
-            transform: translateX(105%);
         }
 
         /* THIẾT KẾ CON DẤU CHỮ HỶ TRÒN NỔI BẬT NẰM CHÍNH GIỮA TRANG BÌA */
@@ -149,18 +101,6 @@
             letter-spacing: 1px;
         }
 
-        /* HIỆU ỨNG KHI BẤM: Vòng tròn chữ Hỷ bung to và mờ dần ra */
-        #welcome-screen.opened .hỷ-seal-container {
-            transform: scale(3);
-            opacity: 0;
-        }
-
-        /* Toàn bộ màn hình bìa tan biến */
-        #welcome-screen.opened {
-            opacity: 0;
-            transform: scale(1.05);
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -168,10 +108,6 @@
 <!-- Giao diện màn hình mở đầu chứa con dấu chữ Hỷ quý phái -->
 <div id="welcome-screen" onclick="goToInvitation()">
     <div class="envelope-overlay"></div>
-    <div class="curtain outer left"></div>
-    <div class="curtain inner left"></div>
-    <div class="curtain outer right"></div>
-    <div class="curtain inner right"></div>
     
     <!-- Con dấu tròn chứa chữ Hỷ ở trung tâm -->
     <div class="hỷ-seal-container">
@@ -183,13 +119,7 @@
 
 <script>
     function goToInvitation() {
-        var screen = document.getElementById("welcome-screen");
-        if (screen) {
-            screen.classList.add("opened");
-            setTimeout(function() {
-                window.location.href = "invitation.html";
-            }, 900);
-        }
+        window.location.href = "invitation.html";
     }
 </script>
 

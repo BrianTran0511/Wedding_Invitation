@@ -1,498 +1,409 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông Tin Chi Tiết Đường Đi</title>
-    
-    <!-- SỬA LỖI: Đường dẫn Google Fonts chuẩn để nhận diện font Great Vibes và Playfair Display -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://googleapis.com" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#54312e">
+  <title>Helen &amp; Brian | Địa điểm tiệc cưới Sài Gòn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wine: #4d2b2b;
+      --wine-deep: #221315;
+      --rose: #a5645b;
+      --gold: #c99755;
+      --gold-light: #ffe2ad;
+      --paper: #fff9ef;
+      --ink: #513832;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Playfair Display", "Times New Roman", serif;
-            background-color: #3a3a3a;
-            color: #ffffff;
-            overflow-x: hidden; 
-        }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--paper);
+      font-family: "Playfair Display", Georgia, serif;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(255,221,173,.82) 0, transparent 19rem),
+        radial-gradient(circle at 92% 90%, rgba(194,111,91,.6) 0, transparent 25rem),
+        linear-gradient(135deg, #241416 0%, #603b39 48%, #ba866b 100%);
+      perspective: 1600px;
+    }
 
-        /* Khung chứa chia đôi màn hình trên Desktop */
-        .container {
-            display: flex;
-            width: 100vw;
-            min-height: 100vh;
-        }
+    body::before {
+      position: fixed;
+      z-index: -2;
+      inset: 0;
+      content: "";
+      opacity: .15;
+      background-image: linear-gradient(90deg, rgba(255,255,255,.8) 1px, transparent 1px), linear-gradient(rgba(255,255,255,.8) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: radial-gradient(circle at center, #000, transparent 78%);
+    }
 
-        /* Khối thông tin bên trái (Desktop) */
-        .info-side {
-            width: 40%;
-            padding: 40px;
-            box-sizing: border-box;
-            background-color: #3a3a3a;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            border-right: 1px dashed rgba(255, 255, 255, 0.2);
-        }
+    .sparkles { position: fixed; z-index: -1; inset: 0; overflow: hidden; pointer-events: none; }
+    .sparkle {
+      position: absolute;
+      top: -12vh;
+      color: #ffefc8;
+      font-size: var(--sparkle-size);
+      opacity: .76;
+      text-shadow: 0 0 13px rgba(255,229,179,.74);
+      animation: drift var(--sparkle-duration) linear var(--sparkle-delay) infinite;
+    }
+    @keyframes drift { to { transform: translate3d(var(--sparkle-drift), 115vh, 0) rotate(540deg); } }
 
-        .info-side h2 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 55px;
-            color: #f3e5ab;
-            margin: 0 0 10px 0;
-        }
+    .opening {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #fff7e9;
+      background: #4a2829;
+    }
+    .opening::before, .opening::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50.5%;
+      content: "";
+      background:
+        linear-gradient(125deg, transparent 0 48%, rgba(255,232,191,.18) 49%, transparent 51%),
+        linear-gradient(145deg, #4b292b, #9e6257 67%, #d3a271);
+      box-shadow: inset 0 0 75px rgba(255,230,189,.16);
+    }
+    .opening::before { left: 0; transform-origin: left center; animation: open-left 1.18s cubic-bezier(.72,0,.22,1) .48s forwards; }
+    .opening::after { right: 0; transform-origin: right center; animation: open-right 1.18s cubic-bezier(.72,0,.22,1) .48s forwards; }
+    .opening-inner { position: relative; z-index: 1; text-align: center; animation: opening-words .36s ease 1.12s forwards; }
+    .opening-inner b { display: block; font: 400 clamp(3.15rem, 9vw, 5.45rem) "Great Vibes", cursive; }
+    .opening-inner span { display: block; margin-top: 8px; font-size: .7rem; letter-spacing: .29em; text-transform: uppercase; }
+    .opening.done { visibility: hidden; pointer-events: none; }
+    @keyframes open-left { to { transform: translateX(-103%) rotateY(-15deg); } }
+    @keyframes open-right { to { transform: translateX(103%) rotateY(15deg); } }
+    @keyframes opening-words { to { opacity: 0; transform: scale(.94); } }
 
-        .thank-you {
-            font-size: 18px;
-            color: #ffffff;
-            margin-bottom: 25px;
-            font-style: italic;
-        }
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 55px;
+      opacity: 0;
+      transform: translateY(21px);
+      animation: arrive .75s cubic-bezier(.2,.8,.2,1) .58s forwards;
+    }
+    @keyframes arrive { to { opacity: 1; transform: translateY(0); } }
 
-        .card-details {
-            background-color: #4a4a4a;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            text-align: left;
-            margin-bottom: 25px;
-        }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      color: #fff8ed;
+    }
+    .brand { font: 400 clamp(2.4rem, 5.3vw, 3.35rem) "Great Vibes", cursive; line-height: 1; text-shadow: 0 3px 16px rgba(38,15,15,.72); }
+    .place-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border: 1px solid rgba(255,255,255,.44);
+      border-radius: 999px;
+      background: rgba(82,42,38,.2);
+      box-shadow: inset 0 1px rgba(255,255,255,.12);
+      font-size: .77rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(9px);
+    }
+    .place-tag i { width: 7px; height: 7px; border-radius: 50%; background: #ffe0a5; box-shadow: 0 0 13px #ffe0a5; }
 
-        .card-details p {
-            font-size: 16px;
-            line-height: 1.8;
-            margin: 10px 0;
-            color: #e0e0e0;
-        }
+    .container {
+      display: grid;
+      grid-template-columns: minmax(350px, .84fr) minmax(430px, 1.16fr);
+      min-height: min(720px, calc(100vh - 126px));
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 32px;
+      background: rgba(255,250,243,.12);
+      box-shadow: 0 28px 72px rgba(36,14,15,.32), inset 0 1px rgba(255,255,255,.22);
+      transform-style: preserve-3d;
+      backdrop-filter: blur(14px);
+    }
 
-        .card-details strong {
-            color: #f3e5ab;
-        }
+    .info-side {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(34px, 5vw, 65px);
+      overflow: hidden;
+      color: var(--ink);
+      text-align: center;
+      background: rgba(255,250,244,.88);
+      box-shadow: 11px 0 37px rgba(42,18,18,.1), inset 0 1px rgba(255,255,255,.88);
+      transform: translateZ(26px);
+    }
+    .info-side::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      content: "";
+      opacity: .14;
+      background: url("images/7.jpg") center / cover no-repeat;
+      filter: saturate(.65);
+    }
+    .eyebrow { margin: 0 0 10px; color: #a16e39; font-size: .72rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+    .info-side h2 {
+      margin: 0 0 9px;
+      color: #593330;
+      font: 400 clamp(3.7rem, 6.4vw, 5.6rem) "Great Vibes", cursive;
+      line-height: .86;
+    }
+    .thank-you { max-width: 340px; margin: 0 auto 25px; color: #785d53; font-size: 1rem; font-style: italic; line-height: 1.7; }
 
-        /* Khung chứa các nút bấm */
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
+    .card-details {
+      position: relative;
+      width: 100%;
+      max-width: 410px;
+      margin: 0 auto 24px;
+      padding: 10px 19px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 22px;
+      background: rgba(255,252,246,.76);
+      box-shadow: 0 18px 37px rgba(58,25,22,.16), inset 0 1px #fff;
+      text-align: left;
+      transform-style: preserve-3d;
+      transition: transform .27s ease, box-shadow .27s ease;
+      backdrop-filter: blur(10px);
+    }
+    .card-details::before { position: absolute; top: 18px; bottom: 18px; left: 20px; width: 1px; content: ""; background: linear-gradient(transparent, #d8af79 12%, #d8af79 88%, transparent); }
+    .card-details:hover { transform: perspective(950px) rotateX(2deg) rotateY(-3deg) translateY(-4px); box-shadow: 0 25px 48px rgba(58,25,22,.23), inset 0 1px #fff; }
+    .card-details p { position: relative; margin: 0; padding: 12px 0 12px 24px; color: #75594f; font-size: .91rem; line-height: 1.48; }
+    .card-details p + p { border-top: 1px solid rgba(174,119,78,.16); }
+    .card-details p::first-letter { color: #a76f43; }
+    .card-details strong { color: #754634; }
 
-        .btn-calendar {
-            display: inline-block;
-            width: 80%;
-            max-width: 280px;
-            padding: 12px 20px;
-            background-color: #f3e5ab;
-            color: #3a3a3a;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(243, 229, 171, 0.2);
-            border: 2px solid #f3e5ab;
-            box-sizing: border-box;
-        }
+    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .btn-calendar, .btn-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 45px;
+      padding: 11px 17px;
+      border: 1px solid rgba(140,83,54,.2);
+      border-radius: 999px;
+      box-shadow: 0 10px 22px rgba(54,23,21,.15), inset 0 1px rgba(255,255,255,.7);
+      text-decoration: none;
+      font-size: .77rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      transition: transform .21s ease, box-shadow .21s ease, background .21s ease;
+    }
+    .btn-calendar { color: #fffaf1; background: linear-gradient(135deg, #8d5645, #b47a55); }
+    .btn-home { color: #774635; background: rgba(255,255,255,.55); }
+    .btn-calendar:hover, .btn-home:hover { transform: translateY(-3px); box-shadow: 0 15px 28px rgba(54,23,21,.22), inset 0 1px rgba(255,255,255,.7); }
+    .btn-calendar:hover { background: linear-gradient(135deg, #794434, #a96947); }
+    .btn-home:hover { background: rgba(255,255,255,.88); }
 
-        .btn-calendar:hover {
-            background-color: #ffffff;
-            border-color: #ffffff;
-            transform: translateY(-2px);
-        }
+    .map-side {
+      position: relative;
+      min-height: 570px;
+      overflow: hidden;
+      background: #35201f;
+    }
+    .map-side::before { position: absolute; z-index: 1; inset: 0; content: ""; pointer-events: none; background: linear-gradient(135deg, rgba(64,27,27,.38), transparent 44%, rgba(255,222,175,.26)); mix-blend-mode: soft-light; }
+    .map-side iframe { width: 100%; height: 100%; min-height: inherit; border: 0; opacity: 0; filter: saturate(.87) sepia(.09) contrast(1.04); transition: opacity .75s ease, filter .4s ease; }
+    .map-side.revealed iframe { opacity: 1; }
+    .map-side:hover iframe { filter: saturate(1) sepia(0) contrast(1.03); }
 
-        .btn-home {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: transparent;
-            color: #f3e5ab;
-            border: 2px solid #f3e5ab;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
+    .map-loading { position: absolute; z-index: 7; inset: 0; display: grid; place-items: center; overflow: hidden; color: #fff9ef; background: #3e2424; text-align: center; }
+    .loader-gif-full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .9; filter: brightness(.55) sepia(.18) saturate(.75); }
+    .map-loading::after { position: absolute; inset: 0; content: ""; background: linear-gradient(135deg, rgba(59,26,26,.42), rgba(167,99,80,.12)); }
+    .loader-caption { position: relative; z-index: 1; max-width: min(86%, 315px); padding: 13px 18px; border: 1px solid rgba(255,255,255,.42); border-radius: 17px; background: rgba(60,29,28,.65); box-shadow: 0 12px 36px rgba(0,0,0,.24); font-size: .88rem; line-height: 1.55; backdrop-filter: blur(9px); }
 
-        .btn-home:hover {
-            background-color: #f3e5ab;
-            color: #3a3a3a;
-            transform: translateY(-2px);
-        }
+    .map-overlay { position: absolute; z-index: 5; right: 24px; bottom: 24px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; max-width: calc(100% - 48px); pointer-events: none; }
+    .map-tip, .map-hint { pointer-events: auto; border: 1px solid rgba(255,255,255,.42); box-shadow: 0 12px 28px rgba(29,12,12,.22); backdrop-filter: blur(12px); }
+    .map-tip { max-width: 235px; padding: 10px 14px; border-radius: 17px; color: #fff9ef; background: rgba(76,39,36,.64); font-size: .79rem; line-height: 1.45; text-align: right; }
+    .map-hint { display: inline-flex; align-items: center; gap: 9px; max-width: 260px; padding: 9px 12px; border-radius: 17px; color: #704735; background: rgba(255,241,211,.89); font-size: .78rem; line-height: 1.42; text-align: right; animation: float-hint 3s ease-in-out infinite; }
+    .hint-icon { display: inline-grid; flex: 0 0 27px; width: 27px; height: 27px; place-items: center; border-radius: 50%; color: #ffe8bb; background: #684035; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+    .map-button { pointer-events: auto; display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border: 1px solid rgba(255,255,255,.47); border-radius: 999px; color: #fffaf0; background: linear-gradient(135deg, rgba(117,66,51,.94), rgba(188,129,76,.94)); box-shadow: 0 12px 29px rgba(31,12,12,.28); text-decoration: none; font-size: .8rem; font-weight: 700; letter-spacing: .06em; transition: transform .2s ease, box-shadow .2s ease; backdrop-filter: blur(8px); }
+    .map-button:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 17px 35px rgba(31,12,12,.34); }
+    @keyframes float-hint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-        /* Khối chứa bản đồ bên phải (Desktop) */
-        .map-side {
-            position: relative;
-            width: 60%;
-            height: 100vh;
-            background-color: #222; 
-            overflow: hidden;
-        }
+    .map-frame-label { position: absolute; z-index: 4; top: 23px; left: 24px; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid rgba(255,255,255,.43); border-radius: 999px; color: #fff8eb; background: rgba(73,37,34,.6); box-shadow: 0 9px 24px rgba(27,12,11,.2); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; backdrop-filter: blur(10px); }
+    .map-frame-label span { color: #ffe0a3; font-size: 1rem; }
 
-        .map-side iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
+    footer { margin-top: 26px; color: rgba(255,248,235,.77); font-size: .69rem; letter-spacing: .2em; text-align: center; text-transform: uppercase; }
 
-        .map-side.revealed iframe {
-            opacity: 1;
-        }
-
-        .map-loading {
-            position: absolute;
-            inset: 0;
-            z-index: 40;
-            display: grid;
-            place-items: center;
-            background: rgba(0,0,0,0.08);
-            color: #fff;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .loader-gif-full {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            z-index: 40;
-        }
-
-        .loader-caption {
-            position: relative;
-            z-index: 20;
-            background: rgba(0,0,0,0.65);
-            color: #fff;
-            padding: 12px 18px;
-            border-radius: 20px;
-            font-size: 14px;
-            max-width: 88%;
-            margin: 0 auto;
-        }
-
-        .loader-pin::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            width: 14px;
-            height: 14px;
-            transform: translateX(-50%) rotate(45deg);
-            background: #3a3a3a;
-            border-radius: 4px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-        }
-
-        .car-track {
-            width: 100%;
-            height: 14px;
-            margin-top: 14px;
-            position: relative;
-            overflow: hidden;
-            background: rgba(255,255,255,0.08);
-            border-radius: 999px;
-            border: 1px dashed rgba(243,229,171,0.4);
-        }
-
-        .driving-car {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            font-size: 20px;
-            animation: driveLoop 2s ease-in-out infinite;
-        }
-
-        @keyframes driveLoop {
-            0% { left: 0; transform: translate(0, -50%) rotate(0deg); }
-            50% { left: calc(100% - 24px); transform: translate(0, -50%) rotate(10deg); }
-            100% { left: 0; transform: translate(0, -50%) rotate(0deg); }
-        }
-
-        .loader-line {
-            width: 100%;
-            height: 4px;
-            border-radius: 999px;
-            background: linear-gradient(90deg, rgba(243,229,171,0.35), rgba(243,229,171,0.9), rgba(243,229,171,0.35));
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loader-line::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -30%;
-            width: 30%;
-            height: 100%;
-            background: rgba(255,255,255,0.9);
-            transform: skewX(-20deg);
-            animation: trackMove 1.6s linear infinite;
-        }
-
-        .loader-gif {
-            width: clamp(120px, 32vw, 260px);
-            max-width: 100%;
-            height: auto;
-            border-radius: 16px;
-            box-shadow: 0 14px 40px rgba(0,0,0,0.22);
-        }
-
-        @keyframes pinBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes trackMove {
-            0% { left: -30%; }
-            100% { left: 130%; }
-        }
-
-        .map-overlay {
-            position: absolute;
-            bottom: 24px;
-            right: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 10px;
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .map-overlay .map-tip {
-            pointer-events: auto;
-            background: rgba(255,255,255,0.88);
-            color: #222;
-            padding: 10px 14px;
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-            font-size: 13px;
-            line-height: 1.4;
-            max-width: 220px;
-            text-align: right;
-        }
-
-        .map-overlay .map-hint {
-            pointer-events: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(243,229,171,0.95);
-            color: #222;
-            padding: 10px 14px;
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-            font-size: 13px;
-            max-width: 240px;
-            text-align: right;
-            animation: floatHint 3s ease-in-out infinite;
-        }
-
-        .map-hint .hint-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #3a3a3a;
-            color: #f3e5ab;
-            font-size: 14px;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
-        }
-
-        .map-overlay .map-button {
-            pointer-events: auto;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 18px;
-            background: linear-gradient(135deg, #f3e5ab, #d4af37);
-            color: #3a3a3a;
-            text-decoration: none;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 13px;
-            box-shadow: 0 10px 26px rgba(0,0,0,0.18);
-            animation: pulseMap 1.8s ease-in-out infinite;
-        }
-
-        @keyframes pulseMap {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.06); }
-        }
-
-        @keyframes floatHint {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-6px); opacity: 0.96; }
-        }
-
-        /* (Ảnh động đã được gỡ bỏ) */
-
-        /* TỐI ƯU RESPONSIVE: THAY ĐỔI BỐ CỤC KHI XEM TRÊN DI ĐỘNG & MÁY TÍNH BẢNG */
-        @media screen and (max-width: 992px) {
-            .info-side {
-                width: 45%;
-                padding: 30px;
-            }
-            .map-side {
-                width: 55%;
-            }
-            .info-side h2 {
-                font-size: 45px;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .container {
-                flex-direction: column-reverse; /* Đẩy Map lên trên đầu, chữ xuống dưới */
-            }
-
-            .map-side {
-                width: 100%;
-                height: 55vh; /* Chiếm 55% màn hình đứng điện thoại */
-            }
-
-            .info-side {
-                width: 100%;
-                padding: 35px 20px;
-                border-right: none;
-                border-top: 1px dashed rgba(255, 255, 255, 0.2);
-            }
-
-            .info-side h2 {
-                font-size: 48px;
-            }
-
-            .thank-you {
-                font-size: 16px;
-                margin-bottom: 15px;
-            }
-
-            .card-details {
-                padding: 15px 20px;
-                margin-bottom: 20px;
-            }
-
-            .card-details p {
-                font-size: 15px;
-                line-height: 1.6;
-            }
-            
-            /* ảnh động đã gỡ, tham chiếu bị xoá */
-        }
-    </style>
+    @media (max-width: 850px) {
+      .container { grid-template-columns: 1fr; }
+      .map-side { min-height: min(62vh, 560px); order: -1; }
+      .info-side { min-height: 530px; padding: 45px 24px; }
+      .map-side iframe { min-height: min(62vh, 560px); }
+    }
+    @media (max-width: 540px) {
+      .shell { width: min(100% - 24px, 1180px); padding-top: 15px; }
+      .topbar { align-items: flex-start; flex-direction: column; gap: 11px; }
+      .container { border-radius: 26px; }
+      .map-side { min-height: 53vh; }
+      .map-side iframe { min-height: 53vh; }
+      .info-side { min-height: 0; padding: 42px 18px; }
+      .card-details { padding-right: 14px; padding-left: 14px; }
+      .card-details::before { left: 15px; }
+      .card-details p { padding-left: 20px; font-size: .86rem; }
+      .btn-group { flex-direction: column; }
+      .btn-calendar, .btn-home { width: min(100%, 290px); }
+      .map-overlay { right: 14px; bottom: 14px; max-width: calc(100% - 28px); }
+      .map-frame-label { top: 14px; left: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .opening { display: none; }
+      .shell { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
+  <div class="sparkles" aria-hidden="true"></div>
+  <div class="opening" aria-hidden="true"><div class="opening-inner"><b>Helen &amp; Brian</b><span>Địa điểm tiệc cưới</span></div></div>
 
-<!-- Ảnh động đã được gỡ bỏ -->
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">Helen &amp; Brian</div>
+      <div class="place-tag"><i aria-hidden="true"></i>Sài Gòn · 03.07.2027</div>
+    </header>
 
-<div class="container">
-
-    <!-- Cột thông tin chi tiết địa điểm -->
-    <div class="info-side">
-        <h2>Cảm Ơn Bạn</h2>
+    <div class="container">
+      <section class="info-side" aria-labelledby="details-title">
+        <p class="eyebrow">Wedding location</p>
+        <h2 id="details-title">Cảm Ơn Bạn</h2>
         <p class="thank-you">Thông tin phản hồi của bạn đã được ghi nhận!</p>
 
         <div class="card-details">
-            <p>📅 <strong>Ngày tổ chức:</strong> 03 / 07 / 2027</p>
-            <p>🕒 <strong>Thời gian:</strong> 07:00 Tối</p>
-            <p>📍 <strong>Địa điểm:</strong> Nhà hàng Tiệc Cưới</p>
-            <p>🏢 <strong>Địa chỉ:</strong> 09 Ngô Tất Tố, Phường Thạnh Mỹ Tây, TP.HCM</p>
+          <p>📅 <strong>Ngày tổ chức:</strong> 03 / 07 / 2027</p>
+          <p>🕒 <strong>Thời gian:</strong> 07:00 Tối</p>
+          <p>📍 <strong>Địa điểm:</strong> Nhà hàng Tiệc Cưới</p>
+          <p>🏢 <strong>Địa chỉ:</strong> 09 Ngô Tất Tố, Phường Thạnh Mỹ Tây, TP.HCM</p>
         </div>
 
         <div class="btn-group">
-            <a href="#" id="googleCalendarBtn" class="btn-calendar">Thêm vào Google Calendar</a>
-            <a href="invitation.html" class="btn-home">Quay lại trang chủ</a>
+          <a href="#" id="googleCalendarBtn" class="btn-calendar">Thêm vào Google Calendar</a>
+          <a href="invitation.html" class="btn-home">Quay lại trang chủ</a>
         </div>
-    </div>
+      </section>
 
-    <!-- Cột bản đồ Google Maps -->
-    <div class="map-side" id="mapSide">
+      <section class="map-side" id="mapSide" aria-label="Bản đồ đến địa điểm tiệc cưới">
+        <div class="map-frame-label"><span aria-hidden="true">⌖</span>Chỉ đường đến tiệc cưới</div>
         <div class="map-loading" id="mapLoader">
-            <img class="loader-gif-full" src="wedding/images/driving.gif" alt="Đang chuẩn bị bản đồ" />
-            <div class="loader-caption">Đang tải bản đồ, mời bạn đợi một chút...</div>
+          <img class="loader-gif-full" src="wedding/images/driving.gif" alt="Đang chuẩn bị bản đồ">
+          <div class="loader-caption">Đang tải bản đồ, mời bạn đợi một chút...</div>
         </div>
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2731369482617!2d106.71339677512869!3d10.790380158936037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528acf2913d89%3A0x42610ace7640e01!2zOSBOZ8O0IFThuqV0IFThu5EsIFRo4bqhbmggTeG7uSBUw6J5LCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2sau!4v1785767589946!5m2!1svi!2sau" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         <div class="map-overlay">
-            <div class="map-tip">Chưa mở bản đồ? Nhấn nút bên dưới để xem đường đến nơi.</div>
-            <div class="map-hint"><span class="hint-icon">🧭</span><span>Nhấn nút để điều hướng nhanh.</span></div>
-            <a href="#" class="map-button" id="openMapBtn">Mở Google Map</a>
+          <div class="map-tip">Chưa mở bản đồ? Nhấn nút bên dưới để xem đường đến nơi.</div>
+          <div class="map-hint"><span class="hint-icon">🧭</span><span>Nhấn nút để điều hướng nhanh.</span></div>
+          <a href="#" class="map-button" id="openMapBtn">Mở Google Map</a>
         </div>
+      </section>
     </div>
+    <footer>Helen &amp; Brian · 03.07.2027 · Sài Gòn</footer>
+  </main>
 
-</div>
-
-<!-- Ảnh động đã bị gỡ, giữ lại logic nút Google Calendar -->
-<script>
+  <script>
     window.addEventListener('load', function() {
-        const googleCalendarBtn = document.getElementById('googleCalendarBtn');
-        const openMapBtn = document.getElementById('openMapBtn');
-        const mapUrl = 'https://www.google.com/maps/place/09+Ng%C3%B4+T%E1%BA%A5t+T%E1%BB%95,+Ph%C6%B0%E1%BB%9Dng+Th%E1%BA%A1nh+M%E1%BA%B9+T%C3%A2y,+TP.HCM';
+      const googleCalendarBtn = document.getElementById('googleCalendarBtn');
+      const openMapBtn = document.getElementById('openMapBtn');
+      const mapUrl = 'https://www.google.com/maps/place/09+Ng%C3%B4+T%E1%BA%A5t+T%E1%BB%95,+Ph%C6%B0%E1%BB%9Dng+Th%E1%BA%A1nh+M%E1%BA%B9+T%C3%A2y,+TP.HCM';
 
-        if (googleCalendarBtn) {
-            googleCalendarBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const params = new URLSearchParams({
-                    action: 'TEMPLATE',
-                    text: 'Lễ Cưới Helen & Brian',
-                    dates: '20270703T190000/20270703T210000',
-                    details: 'Tham dự lễ cưới Helen & Brian tại Sài Gòn.',
-                    location: '09 Ngô Tất Tổ, Phường Thạnh Mỹ Tây, TP.HCM',
-                    ctz: 'Asia/Ho_Chi_Minh'
-                });
-                const url = 'https://calendar.google.com/calendar/render?' + params.toString();
-                window.open(url, '_blank', 'noopener');
-            });
-        }
+      if (googleCalendarBtn) {
+        googleCalendarBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: 'Lễ Cưới Helen & Brian',
+            dates: '20270703T190000/20270703T210000',
+            details: 'Tham dự lễ cưới Helen & Brian tại Sài Gòn.',
+            location: '09 Ngô Tất Tố, Phường Thạnh Mỹ Tây, TP.HCM',
+            ctz: 'Asia/Ho_Chi_Minh'
+          });
+          const url = 'https://calendar.google.com/calendar/render?' + params.toString();
+          window.open(url, '_blank', 'noopener');
+        });
+      }
 
-        const mapLoader = document.getElementById('mapLoader');
-        const mapSide = document.getElementById('mapSide');
+      const mapLoader = document.getElementById('mapLoader');
+      const mapSide = document.getElementById('mapSide');
 
-        function revealMap() {
-            if (mapLoader) {
-                mapLoader.style.opacity = '0';
-                mapLoader.style.transition = 'opacity 0.5s ease';
-                setTimeout(function() {
-                    if (mapLoader && mapLoader.parentNode) {
-                        mapLoader.parentNode.removeChild(mapLoader);
-                    }
-                }, 600);
+      function revealMap() {
+        if (mapLoader) {
+          mapLoader.style.opacity = '0';
+          mapLoader.style.transition = 'opacity 0.5s ease';
+          setTimeout(function() {
+            if (mapLoader && mapLoader.parentNode) {
+              mapLoader.parentNode.removeChild(mapLoader);
             }
-            if (mapSide) {
-                mapSide.classList.add('revealed');
-            }
+          }, 600);
         }
-
-        if (openMapBtn) {
-            openMapBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.open(mapUrl, '_blank', 'noopener');
-            });
-        }
-
-        setTimeout(revealMap, 2200);
         if (mapSide) {
-            const iframe = mapSide.querySelector('iframe');
-            if (iframe) {
-                iframe.addEventListener('load', revealMap);
-            }
+          mapSide.classList.add('revealed');
         }
-    });
-</script>
+      }
 
+      if (openMapBtn) {
+        openMapBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.open(mapUrl, '_blank', 'noopener');
+        });
+      }
+
+      setTimeout(revealMap, 2200);
+      if (mapSide) {
+        const iframe = mapSide.querySelector('iframe');
+        if (iframe) {
+          iframe.addEventListener('load', revealMap);
+        }
+      }
+    });
+
+    (() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const opening = document.querySelector('.opening');
+      window.setTimeout(() => opening.classList.add('done'), reducedMotion ? 0 : 1780);
+
+      if (reducedMotion) return;
+      const sparkles = document.querySelector('.sparkles');
+      for (let i = 0; i < 17; i += 1) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = i % 3 === 0 ? '✦' : '·';
+        sparkle.style.left = `${Math.random() * 100}%`;
+        sparkle.style.setProperty('--sparkle-drift', `${-100 + Math.random() * 200}px`);
+        sparkle.style.setProperty('--sparkle-duration', `${8 + Math.random() * 8}s`);
+        sparkle.style.setProperty('--sparkle-delay', `${-Math.random() * 14}s`);
+        sparkle.style.setProperty('--sparkle-size', `${10 + Math.random() * 11}px`);
+        sparkles.append(sparkle);
+      }
+
+      const detailCard = document.querySelector('.card-details');
+      detailCard.addEventListener('pointermove', (event) => {
+        if (event.pointerType === 'touch') return;
+        const rect = detailCard.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - .5;
+        const y = (event.clientY - rect.top) / rect.height - .5;
+        detailCard.style.transform = `perspective(950px) rotateX(${(-y * 3).toFixed(2)}deg) rotateY(${(x * 4).toFixed(2)}deg) translateY(-4px)`;
+      });
+      detailCard.addEventListener('pointerleave', () => { detailCard.style.transform = ''; });
+    })();
+  </script>
 </body>
 </html>
