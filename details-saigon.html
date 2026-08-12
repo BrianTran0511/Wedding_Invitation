@@ -157,7 +157,7 @@
       inset: 0;
       content: "";
       opacity: .14;
-      background: url("images/7.jpg") center / cover no-repeat;
+      background: url("images/optimized/7.jpg") center / cover no-repeat;
       filter: saturate(.65);
     }
     .eyebrow { margin: 0 0 10px; color: #a16e39; font-size: .72rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
@@ -168,6 +168,9 @@
       line-height: .86;
     }
     .thank-you { max-width: 340px; margin: 0 auto 25px; color: #785d53; font-size: 1rem; font-style: italic; line-height: 1.7; }
+    @media (min-width: 851px) {
+      .info-side h2 { font-size: clamp(2.9rem, 4vw, 4.3rem); white-space: nowrap; }
+    }
 
     .card-details {
       position: relative;
